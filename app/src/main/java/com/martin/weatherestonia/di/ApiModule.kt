@@ -12,17 +12,17 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 @Module
-class ApiModule {
+open class ApiModule {
     private val URL: String = "https://weather.aw.ee/api/estonia/"
 
 
     @Provides
-    fun provideOkHttpCLient(interceptor: Interceptor) : OkHttpClient =
+    fun provideOkHttpClient(interceptor: Interceptor) : OkHttpClient =
         OkHttpClient().newBuilder().addInterceptor(interceptor).build()
 
 
     @Provides
-    fun provideAnimalAPi(): WeatherApi {
+    fun provideWeatherApi(): WeatherApi {
         return Retrofit.Builder()
             .baseUrl(URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -33,7 +33,7 @@ class ApiModule {
 
 
     @Provides
-    fun provideAnimalApiService(): WeatherApiService {
+    open fun provideWeatherApiService(): WeatherApiService {
         return WeatherApiService()
     }
 

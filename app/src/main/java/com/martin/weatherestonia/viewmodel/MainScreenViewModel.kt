@@ -26,22 +26,46 @@ class MainScreenViewModel(application: Application) : AndroidViewModel(applicati
 
 
     private val disposable = CompositeDisposable()
+    private var injected = false
+
 
     @Inject
     lateinit var apiService: WeatherApiService
 
-    init {
-        DaggerViewModelComponent.builder().appModule(AppModule(getApplication())).build()
-            .inject(this)
+    constructor(application: Application, test: Boolean = true) : this(application) {
+
+        injected = true
     }
 
-    fun refresh() {
+    fun inject() {
 
+        if (!injected) {
+            DaggerViewModelComponent.builder()
+                .appModule(AppModule(getApplication()))
+                .build()
+                .inject(this)
+        }
+    }
+
+
+
+
+
+    fun showFourDaysWeather() {
+
+        inject()
         loading.value = true
 
         getWeather()
-        getCurrentWeather()
 
+
+    }
+
+    fun showCurrentWeather(){
+
+        inject()
+        loading.value = true
+        getCurrentWeather()
 
     }
 
@@ -79,7 +103,7 @@ class MainScreenViewModel(application: Application) : AndroidViewModel(applicati
                 .subscribeWith(object : DisposableSingleObserver<WeatherCurrent>() {
                     override fun onSuccess(current: WeatherCurrent) {
 
-                        Log.d("GetWeather", current.toString())
+
                         loadError.value = false
                         currentWeather.value = current
                         loading.value = false

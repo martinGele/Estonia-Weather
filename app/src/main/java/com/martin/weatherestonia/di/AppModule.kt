@@ -9,5 +9,4 @@ class AppModule(val app:Application) {
 
     @Provides
     fun providesApp():Application= app
-
 }

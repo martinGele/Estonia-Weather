@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_main_screen.*
 class MainScreenFragment : Fragment() {
 
     private lateinit var viewModel: MainScreenViewModel
-        private val listAdapter = WeatherAdapter(arrayListOf())
+    private val listAdapter = WeatherAdapter(arrayListOf())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,7 +40,8 @@ class MainScreenFragment : Fragment() {
         viewModel.currentWeather.observe(this, currentWeatherDataObserver)
         viewModel.loading.observe(this, loadingLiveDataObserver)
         viewModel.loadError.observe(this, onErrorLiveDataObserver)
-        viewModel.refresh()
+        viewModel.showFourDaysWeather()
+        viewModel.showCurrentWeather()
 
         weatherForecastRecycler.apply {
             layoutManager = GridLayoutManager(context, 2)
@@ -48,13 +49,14 @@ class MainScreenFragment : Fragment() {
         }
 
         refresh_layout.setOnRefreshListener {
-            weatherForecastRecycler.visibility= View.GONE
+            weatherForecastRecycler.visibility = View.GONE
 
-            listError.visibility= View.GONE
-            loadingView.visibility= View.VISIBLE
-            viewModel.refresh()
+            listError.visibility = View.GONE
+            loadingView.visibility = View.VISIBLE
+            viewModel.showFourDaysWeather()
+            viewModel.showCurrentWeather()
 
-            refresh_layout.isRefreshing= false
+            refresh_layout.isRefreshing = false
         }
 
     }
