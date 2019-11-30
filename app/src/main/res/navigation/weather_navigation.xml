@@ -23,7 +23,7 @@
             android:id="@+id/goToMainScreen"
             app:destination="@id/mainScreenFragment" />
         <argument
-            android:name="weather"
-            app:argType="com.martin.weatherestonia.model.WeatherFourDays" />
+            android:name="forecast"
+            app:argType="com.martin.weatherestonia.model.Forecast" />
     </fragment>
 </navigation>
