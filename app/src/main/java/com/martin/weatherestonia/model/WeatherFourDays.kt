@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 data class WeatherFourDays(
     @SerializedName("forecasts")
     val forecasts: List<Forecast> = listOf()
-):Parcelable {
+) : Parcelable {
     constructor(parcel: Parcel) : this(parcel.createTypedArrayList(Forecast)!!) {
     }
 
