@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.martin.weatherestonia.R
 import com.martin.weatherestonia.adapter.CurrentDayWeatherAdapter
@@ -56,13 +57,14 @@ class MainScreenFragment : Fragment() {
 
         }
         weatherForecastRecycler.apply {
+            addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = listAdapterFOurDaysForecast
         }
 
         refresh_layout.setOnRefreshListener {
             weatherForecastRecycler.visibility = View.GONE
-
+            weatherForecastCurrent.visibility = View.GONE
             listError.visibility = View.GONE
             loadingView.visibility = View.VISIBLE
             viewModel.showFourDaysWeather()
@@ -85,7 +87,7 @@ class MainScreenFragment : Fragment() {
     private val currentWeatherDataObserver = Observer<WeatherCurrent> { current ->
 
         current?.let {
-            weatherForecastRecycler.visibility = View.VISIBLE
+            weatherForecastCurrent.visibility = View.VISIBLE
             listAdapterCurrentWeather.updateCurrentWeather(it.observations)
         }
     }

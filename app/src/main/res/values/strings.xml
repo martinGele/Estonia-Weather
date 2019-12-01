@@ -6,6 +6,8 @@
     <string name="an_error_occurred">an error occurred...</string>
 
 
+    <!--All the Phenomenon switch casses  -->
+
     <string name="clear">Clear</string>
     <string name="few_clouds">Few clouds</string>
     <string name="variable_clouds">Variable clouds</string>
