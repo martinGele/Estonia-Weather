@@ -4,4 +4,34 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="an_error_occurred">an error occurred...</string>
+
+
+    <string name="clear">Clear</string>
+    <string name="few_clouds">Few clouds</string>
+    <string name="variable_clouds">Variable clouds</string>
+    <string name="cloudy_with_clear_spells">Cloudy with clear spells</string>
+    <string name="cloudy">Cloudy</string>
+    <string name="light_snow_shower">Light snow shower</string>
+    <string name="moderate_snow_shower">Moderate snow shower</string>
+    <string name="heavy_snow_shower">Heavy snow shower</string>
+    <string name="light_showrt">Light shower</string>
+    <string name="moderate_shower">Moderate shower</string>
+    <string name="heavy_shower">Heavy shower</string>
+    <string name="light_rain">Light rain</string>
+    <string name="moderate_rain">Moderate rain</string>
+    <string name="heavy_rain">Heavy rain</string>
+    <string name="risk_of_gaze">Risk of glaze</string>
+    <string name="light_sleet">Light sleet</string>
+    <string name="moderate__sleet">Moderate sleet</string>
+    <string name="light_snowfal">Light snowfall</string>
+    <string name="moderate_snowfal">Moderate snowfall</string>
+    <string name="heavy_snowfal">Heavy snowfall</string>
+    <string name="snowstorm">Snowstorm</string>
+    <string name="drifting_snow">Drifting snow</string>
+    <string name="hail">Hail</string>
+    <string name="mist">Mist</string>
+    <string name="fog">Fog</string>
+    <string name="thunder">Thunder</string>
+    <string name="thunderstorm">Thunderstorm</string>
+
 </resources>

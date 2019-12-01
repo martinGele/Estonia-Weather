@@ -37,5 +37,8 @@
         <action
             android:id="@+id/goToMainFragment"
             app:destination="@id/mainScreenFragment" />
+        <argument
+            android:name="curerntWeather"
+            app:argType="com.martin.weatherestonia.model.Observation" />
     </fragment>
 </navigation>
