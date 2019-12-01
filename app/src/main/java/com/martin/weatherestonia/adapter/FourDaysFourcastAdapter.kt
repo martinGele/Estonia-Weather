@@ -6,20 +6,20 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.martin.weatherestonia.R
-import com.martin.weatherestonia.databinding.ItemListBinding
+import com.martin.weatherestonia.databinding.ItemListFourDaysForecastBinding
 import com.martin.weatherestonia.model.Forecast
 import com.martin.weatherestonia.view.MainScreenFragmentDirections
-import kotlinx.android.synthetic.main.item_list.view.*
+import kotlinx.android.synthetic.main.item_list_four_days_forecast.view.*
 
-class WeatherAdapter(private val forecastList: ArrayList<Forecast>) :
-    RecyclerView.Adapter<WeatherAdapter.WeatherViewHolder>() {
+class FourDaysFourcastAdapter(private val forecastList: ArrayList<Forecast>) :
+    RecyclerView.Adapter<FourDaysFourcastAdapter.WeatherViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherViewHolder {
 
         val inflater = LayoutInflater.from(parent.context)
         val view =
-            DataBindingUtil.inflate<ItemListBinding>(inflater, R.layout.item_list, parent, false)
+            DataBindingUtil.inflate<ItemListFourDaysForecastBinding>(inflater, R.layout.item_list_four_days_forecast, parent, false)
 
         return WeatherViewHolder(view)
     }
@@ -37,12 +37,12 @@ class WeatherAdapter(private val forecastList: ArrayList<Forecast>) :
         }
     }
 
-    fun updateAnimalList(forecasts: List<Forecast>) {
+    fun updateWeatherList(forecasts: List<Forecast>) {
         forecastList.clear()
         forecastList.addAll(forecasts)
         notifyDataSetChanged()
     }
 
-    class WeatherViewHolder(var view: ItemListBinding) : RecyclerView.ViewHolder(view.root)
+    class WeatherViewHolder(var view: ItemListFourDaysForecastBinding) : RecyclerView.ViewHolder(view.root)
 
 }

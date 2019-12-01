@@ -12,7 +12,7 @@ import com.martin.weatherestonia.R
 /**
  * A simple [Fragment] subclass.
  */
-class DetailScreenFragment : Fragment() {
+class DetailScreenFourDaysFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -13,10 +13,13 @@
         <action
             android:id="@+id/goToDetails"
             app:destination="@id/detailScreenFragment" />
+        <action
+            android:id="@+id/goToDetailCurrent"
+            app:destination="@id/detialScreenCurrentFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailScreenFragment"
-        android:name="com.martin.weatherestonia.view.DetailScreenFragment"
+        android:name="com.martin.weatherestonia.view.DetailScreenFourDaysFragment"
         android:label="fragment_detail_screen"
         tools:layout="@layout/fragment_detail_screen" >
         <action
@@ -25,5 +28,14 @@
         <argument
             android:name="forecast"
             app:argType="com.martin.weatherestonia.model.Forecast" />
+    </fragment>
+    <fragment
+        android:id="@+id/detialScreenCurrentFragment"
+        android:name="com.martin.weatherestonia.view.DetialScreenCurrentFragment"
+        android:label="fragment_detial_screen_current"
+        tools:layout="@layout/fragment_detial_screen_current" >
+        <action
+            android:id="@+id/goToMainFragment"
+            app:destination="@id/mainScreenFragment" />
     </fragment>
 </navigation>
