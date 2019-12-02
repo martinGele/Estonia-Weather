@@ -80,16 +80,11 @@ class MainScreenViewModel(application: Application) : AndroidViewModel(applicati
                 .subscribeWith(object : DisposableSingleObserver<WeatherFourDays>() {
                     override fun onSuccess(list: WeatherFourDays) {
 
-
                         Observable.fromCallable {
                             date?.userDao()?.insertAllCurrent(list)
-
-
                         }.subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe()
-
-
 
                         loadError.value = false
                         weather.value = list
@@ -117,19 +112,14 @@ class MainScreenViewModel(application: Application) : AndroidViewModel(applicati
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<WeatherCurrent>() {
                     override fun onSuccess(current: WeatherCurrent) {
-
                         Observable.fromCallable {
                             with(date){
                                 this?.userDao()?.insertAllObservation(current)
 
                             }
-
                         }.subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe()
-
-
-
                         loadError.value = false
                         currentWeather.value = current
                         loading.value = false

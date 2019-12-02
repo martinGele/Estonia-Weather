@@ -62,20 +62,12 @@ class MainScreenFragment : Fragment() {
 
 
 
-        Observable.fromCallable {
-
-            data?.userDao()?.getCurrentObservation()
-        }.doOnNext { list ->
-
-            list?.map {
-
-                Log.d("GetWeather", it.observations.toString())
-            }
 
 
-        }.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe()
+            data?.userDao()?.getCurrentObservation()?.observe(this, Observer {
+               Log.d("GetWeather", it.toString())
+           })
+
 
 
 
