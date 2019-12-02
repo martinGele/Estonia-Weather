@@ -25,7 +25,7 @@ fun ImageView.loadImage(image: String, progressDrawable: CircularProgressDrawabl
 
     val options = RequestOptions()
         .placeholder(progressDrawable)
-        .error(R.mipmap.ic_launcher_round)
+        .error(R.drawable.no_image_to_show_)
 
 
     Glide.with(context)
@@ -41,11 +41,12 @@ fun getIconResourceForWeatherCondition(weatherId: String): Int {
         return R.drawable.ic_storm
     } else if (weatherId == "Light rain"
         || weatherId == "Moderate rain"
-        || weatherId == "Heavy rain"
+
         || weatherId == "Light shower"
     ) {
         return R.drawable.ic_light_rain
-    } else if (weatherId == "Moderate rain") {
+    } else if (weatherId == "Moderate rain"
+        || weatherId == "Heavy rain") {
         return R.drawable.ic_rain
     } else if (weatherId == "Snowstorm"
         || weatherId == "Drifting snow"
@@ -79,11 +80,11 @@ fun loadImage(view: ImageView, uri: String) {
 
 }
 
-fun ImageView.loadImageToday(image: Int, progressDrawable: CircularProgressDrawable) {
+fun ImageView.loadImageToday(image: String, progressDrawable: CircularProgressDrawable) {
 
     val options = RequestOptions()
         .placeholder(progressDrawable)
-        .error(R.mipmap.ic_launcher_round)
+        .error(R.drawable.no_image_to_show_)
 
 
     Glide.with(context)
@@ -94,28 +95,38 @@ fun ImageView.loadImageToday(image: Int, progressDrawable: CircularProgressDrawa
 }
 
 
-fun getArtResourceForWeatherCondition(weatherId: Int): Int {
-    if (weatherId in 200..232) {
+fun getArtResourceForWeatherCondition(weatherId: String): Int {
+    if (weatherId == "Thunderstorm") {
         return R.drawable.art_storm
-    } else if (weatherId in 300..321) {
+    } else if (weatherId == "Light rain"
+        || weatherId == "Moderate rain"
+
+        || weatherId == "Light shower") {
         return R.drawable.art_light_rain
-    } else if (weatherId in 500..504) {
+    } else if (weatherId == "Moderate rain" || weatherId == "Heavy rain") {
         return R.drawable.art_rain
-    } else if (weatherId == 511) {
+    } else if (weatherId == "Snowstorm"
+        || weatherId == "Drifting snow"
+        || weatherId == "Heavy snow shower"
+        || weatherId == "Heavy snowfall"
+        || weatherId == "Light snow shower"
+        || weatherId == "Moderate snowfall"
+        || weatherId == "Light snowfall"
+        || weatherId == "Moderate snow shower") {
         return R.drawable.art_snow
-    } else if (weatherId in 520..531) {
-        return R.drawable.art_rain
-    } else if (weatherId in 600..622) {
-        return R.drawable.art_rain
-    } else if (weatherId in 701..761) {
+
+
+    } else if (weatherId == "Fog") {
         return R.drawable.art_fog
-    } else if (weatherId == 761 || weatherId == 781) {
-        return R.drawable.art_storm
-    } else if (weatherId == 800) {
+
+    } else if (weatherId == "Clear") {
         return R.drawable.art_clear
-    } else if (weatherId == 801) {
+    } else if (weatherId == "Few clouds") {
         return R.drawable.art_light_clouds
-    } else if (weatherId in 802..804) {
+    } else if (weatherId == "Cloudy with clear spells"
+        || weatherId == "Cloudy"
+        || weatherId == "Variable clouds"
+        || weatherId =="Overcast") {
         return R.drawable.art_clouds
     }
     return -1
@@ -123,7 +134,7 @@ fun getArtResourceForWeatherCondition(weatherId: Int): Int {
 }
 
 @BindingAdapter("android:ImageToday")
-fun loadImageToday(view: ImageView, uri: Int) {
+fun loadImageToday(view: ImageView, uri: String) {
     view.loadImageToday(uri, getProgressDrawable(view.context))
 
 }

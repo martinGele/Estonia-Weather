@@ -21,4 +21,10 @@
         <item name="android:fontFamily">sans-monospace</item>
     </style>
 
+    <style name="SubTExt">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">sans-monospace</item>
+    </style>
+
+
 </resources>
