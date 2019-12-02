@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.os.Parcel
 import com.google.gson.annotations.SerializedName
 import android.os.Parcelable
+import androidx.room.Entity
 
+@Entity(tableName = "current")
 data class WeatherCurrent(
     @SerializedName("timestamp")
     val timestamp: String = "",
