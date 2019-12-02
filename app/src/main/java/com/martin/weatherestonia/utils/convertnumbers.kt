@@ -4,71 +4,57 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 
 object Words {
-    private val tensNames = arrayOf(
-        "",
-        " ten",
-        " twenty",
-        " thirty",
-        " forty",
-        " fifty",
-        " sixty",
-        " seventy",
-        " eighty",
-        " ninety"
+    val units = arrayOf(
+        "", "One", "Two", "Three", "Four",
+        "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve",
+        "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen",
+        "Eighteen", "Nineteen"
     )
-    private val numNames = arrayOf(
-        "",
-        " one",
-        " two",
-        " three",
-        " four",
-        " five",
-        " six",
-        " seven",
-        " eight",
-        " nine",
-        " ten",
-        " eleven",
-        " twelve",
-        " thirteen",
-        " fourteen",
-        " fifteen",
-        " sixteen",
-        " seventeen",
-        " eighteen",
-        " nineteen"
+    val tens = arrayOf(
+        "",  // 0
+        "",  // 1
+        "Twenty",  // 2
+        "Thirty",  // 3
+        "Forty",  // 4
+        "Fifty",  // 5
+        "Sixty",  // 6
+        "Seventy",  // 7
+        "Eighty",  // 8
+        "Ninety" // 9
     )
 
-    fun convertLessThanOneThousand(number: Int): String? {
-        try {
-
-
-            var number = number
-            var soFar: String
-            if (number % 100 < 20|| number % 100< -20) {
-                soFar = numNames[number % 100]
-                number /= 100
-            } else {
-                soFar = numNames[number % 10]
-                number /= 10
-                soFar = tensNames[number % 10] + soFar
-                number /= 10
-            }
-            return if (number == 0) soFar else numNames[number] + " hundred" + soFar
-
-        } catch (e: Exception) {
-            print(e.printStackTrace())
+    fun convert(n: Int): String {
+        if (n < 0) {
+            return "Minus " + convert(-n)
         }
-
-        return null
+        if (n < 20) {
+            return units[n]
+        }
+        if (n < 100) {
+            return tens[n / 10] + (if (n % 10 != 0) " " else "") + units[n % 10]
+        }
+        if (n < 1000) {
+            return units[n / 100] + " Hundred" + (if (n % 100 != 0) " " else "") + convert(
+                n % 100
+            )
+        }
+        if (n < 100000) {
+            return convert(n / 1000) + " Thousand" + (if (n % 10000 != 0) " " else "") + convert(
+                n % 1000
+            )
+        }
+        return if (n < 10000000) {
+            convert(n / 100000) + " Lakh" + (if (n % 100000 != 0) " " else "") + convert(
+                n % 100000
+            )
+        } else convert(n / 10000000) + " Crore" + (if (n % 10000000 != 0) " " else "") + convert(
+            n % 10000000
+        )
     }
-
-
 }
-
 
 @BindingAdapter("android:showWord")
 fun showDayOfWeek(view: TextView, minMax: Double) {
     val value = minMax.toInt()
-    view.text = Words.convertLessThanOneThousand(value)
+    view.text = Words.convert(value)
 }

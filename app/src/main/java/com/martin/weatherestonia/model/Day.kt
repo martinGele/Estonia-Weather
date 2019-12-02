@@ -18,31 +18,28 @@ data class Day(
     @SerializedName("peipsi")
     val peipsi: Any? = Any(),
     @SerializedName("places")
-    val places: Any? = Any(),
+    val places: List<Places>? = listOf(),
     @SerializedName("winds")
     val winds: Any? = Any()
 ):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
-        parcel.readDouble(),
-        parcel.readDouble(),
+        parcel.readValue(Double::class.java.classLoader) as? Double,
+        parcel.readValue(Double::class.java.classLoader) as? Double,
         parcel.readString(),
         TODO("sea"),
         TODO("peipsi"),
-        TODO("places"),
+        parcel.createTypedArrayList(Places),
         TODO("winds")
     ) {
     }
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(phenomenon)
-        tempmin?.let { parcel.writeDouble(it) }
-        tempmax?.let { parcel.writeDouble(it) }
-        parcel.writeString(text)
+    override fun writeToParcel(p0: Parcel?, p1: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun describeContents(): Int {
-        return 0
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     companion object CREATOR : Parcelable.Creator<Day> {
