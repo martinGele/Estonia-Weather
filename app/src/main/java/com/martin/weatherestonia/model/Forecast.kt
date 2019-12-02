@@ -1,26 +1,28 @@
 package com.martin.weatherestonia.model
 
+
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class Forecast(
     @SerializedName("date")
-    val date: String? = "",
+    val date: String?,
     @SerializedName("day")
-    val day: Day = Day(),
+    val day: Day?,
     @SerializedName("night")
-    val night: Night? = Night()
-) : Parcelable {
+    val night: Night?
+):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
-        TODO("day"),
+        parcel.readParcelable(Day::class.java.classLoader),
         parcel.readParcelable(Night::class.java.classLoader)
     ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(date)
+        parcel.writeParcelable(day, flags)
         parcel.writeParcelable(night, flags)
     }
 

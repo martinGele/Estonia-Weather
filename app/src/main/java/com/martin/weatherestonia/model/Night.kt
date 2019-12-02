@@ -1,48 +1,46 @@
 package com.martin.weatherestonia.model
 
+
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class Night(
-    @SerializedName("phenomenon")
-    val phenomenon: String? = "",
-    @SerializedName("tempmin")
-    val tempmin: Double? = 0.0,
-    @SerializedName("tempmax")
-    val tempmax: Double? = 0.0,
-    @SerializedName("text")
-    val text: String? = "",
-    @SerializedName("sea")
-    val sea: Any? = Any(),
     @SerializedName("peipsi")
-    val peipsi: Any? = Any(),
+    val peipsi: Any?,
+    @SerializedName("phenomenon")
+    val phenomenon: String?,
     @SerializedName("places")
-    val places: Any? = Any(),
+    val places: Any?,
+    @SerializedName("sea")
+    val sea: Any?,
+    @SerializedName("tempmax")
+    val tempmax: Double?,
+    @SerializedName("tempmin")
+    val tempmin: Double?,
+    @SerializedName("text")
+    val text: String?,
     @SerializedName("winds")
-    val winds: Any? = Any()
+    val winds: Any?
 ):Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readString(),
-        parcel.readDouble(),
-        parcel.readDouble(),
-        parcel.readString(),
-        TODO("sea"),
         TODO("peipsi"),
+        parcel.readString(),
         TODO("places"),
+        TODO("sea"),
+        parcel.readValue(Double::class.java.classLoader) as? Double,
+        parcel.readValue(Double::class.java.classLoader) as? Double,
+        parcel.readString(),
         TODO("winds")
     ) {
     }
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(phenomenon)
-        tempmin?.let { parcel.writeDouble(it) }
-        tempmax?.let { parcel.writeDouble(it) }
-        parcel.writeString(text)
+    override fun writeToParcel(p0: Parcel?, p1: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun describeContents(): Int {
-        return 0
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     companion object CREATOR : Parcelable.Creator<Night> {

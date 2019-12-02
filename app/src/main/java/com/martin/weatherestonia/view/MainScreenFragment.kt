@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.martin.weatherestonia.R
 import com.martin.weatherestonia.adapter.CurrentDayWeatherAdapter
 import com.martin.weatherestonia.adapter.FourDaysFourcastAdapter
+import com.martin.weatherestonia.model.Forecast
 import com.martin.weatherestonia.model.WeatherCurrent
 import com.martin.weatherestonia.model.WeatherFourDays
 import com.martin.weatherestonia.viewmodel.MainScreenViewModel
@@ -80,7 +81,7 @@ class MainScreenFragment : Fragment() {
 
         list?.let {
             weatherForecastRecycler.visibility = View.VISIBLE
-            listAdapterFOurDaysForecast.updateWeatherList(it.forecasts)
+            listAdapterFOurDaysForecast.updateWeatherList(it.forecasts as List<Forecast>)
         }
     }
 

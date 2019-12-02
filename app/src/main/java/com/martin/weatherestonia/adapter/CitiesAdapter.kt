@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.martin.weatherestonia.R
 import com.martin.weatherestonia.databinding.ItemForecastCitiesBinding
 import com.martin.weatherestonia.model.Forecast
+import com.martin.weatherestonia.model.Places
 
-class CitiesAdapter(private val forecastList: ArrayList<Forecast>) :
+class CitiesAdapter(private val forecastList: ArrayList<Places?>) :
     RecyclerView.Adapter<CitiesAdapter.CitiesViewHolder>() {
 
 
@@ -39,7 +40,7 @@ class CitiesAdapter(private val forecastList: ArrayList<Forecast>) :
     }
 
 
-    fun updateWeatherList(forecasts: List<Forecast>) {
+    fun updateCitiesList(forecasts: List<Places?>) {
         forecastList.clear()
         forecastList.addAll(forecasts)
         notifyDataSetChanged()

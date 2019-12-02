@@ -1,35 +1,36 @@
 package com.martin.weatherestonia.model
 
+
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class Day(
-    @SerializedName("phenomenon")
-    val phenomenon: String? = "",
-    @SerializedName("tempmin")
-    val tempmin: Double? = 0.0,
-    @SerializedName("tempmax")
-    val tempmax: Double? = 0.0,
-    @SerializedName("text")
-    val text: String? = "",
-    @SerializedName("sea")
-    val sea: Any? = Any(),
     @SerializedName("peipsi")
-    val peipsi: Any? = Any(),
+    val peipsi: Any?,
+    @SerializedName("phenomenon")
+    val phenomenon: String?,
     @SerializedName("places")
-    val places: List<Places>? = listOf(),
+    val places: List<Places>?,
+    @SerializedName("sea")
+    val sea: Any?,
+    @SerializedName("tempmax")
+    val tempmax: Double?,
+    @SerializedName("tempmin")
+    val tempmin: Double?,
+    @SerializedName("text")
+    val text: String?,
     @SerializedName("winds")
-    val winds: Any? = Any()
+    val winds: Any?
 ):Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readString(),
-        parcel.readValue(Double::class.java.classLoader) as? Double,
-        parcel.readValue(Double::class.java.classLoader) as? Double,
-        parcel.readString(),
-        TODO("sea"),
         TODO("peipsi"),
-        parcel.createTypedArrayList(Places),
+        parcel.readString(),
+        TODO("places"),
+        TODO("sea"),
+        parcel.readValue(Double::class.java.classLoader) as? Double,
+        parcel.readValue(Double::class.java.classLoader) as? Double,
+        parcel.readString(),
         TODO("winds")
     ) {
     }

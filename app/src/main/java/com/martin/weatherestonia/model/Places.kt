@@ -1,19 +1,20 @@
 package com.martin.weatherestonia.model
 
+
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class Places(
     @SerializedName("name")
-    val name: String? = "",
+    val name: String?,
     @SerializedName("phenomenon")
-    val phenomenon: String? = "",
-    @SerializedName("tempmin")
-    val tempmin: Double? = 0.0,
+    val phenomenon: String?,
     @SerializedName("tempmax")
-    val tempmax: Double? = 0.0
-    ):Parcelable {
+    val tempmax: Double?,
+    @SerializedName("tempmin")
+    val tempmin: Double?
+):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),
@@ -22,15 +23,12 @@ data class Places(
     ) {
     }
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(name)
-        parcel.writeString(phenomenon)
-        parcel.writeValue(tempmin)
-        parcel.writeValue(tempmax)
+    override fun writeToParcel(p0: Parcel?, p1: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun describeContents(): Int {
-        return 0
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     companion object CREATOR : Parcelable.Creator<Places> {
