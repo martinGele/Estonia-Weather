@@ -1,30 +1,31 @@
 package com.martin.weatherestonia.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.martin.weatherestonia.model.WeatherCurrent
-import com.martin.weatherestonia.model.WeatherFourDays
+import com.martin.weatherestonia.model.*
+import io.reactivex.Flowable
 import io.reactivex.Single
 
 
 @Dao
 interface WeatherDao {
 
-    @Query("SELECT * FROM forecast")
-    fun getForecast(): Single<WeatherFourDays>
+
+
+    @Query("SELECT * FROM day")
+    fun getCurrentWeather(): Single<WeatherFourDays>
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllForecast(users: WeatherFourDays)
+    fun insertAllCurrent(currentWeather: WeatherFourDays)
 
-
-
-    @Query("SELECT * FROM current")
-    fun getCurrentWeather(): Single<WeatherCurrent>
+    @Query("SELECT * FROM currentWeather")
+    fun getCurrentObservation():Single<WeatherCurrent>
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllCurrent(currentWeather: WeatherCurrent)
+    fun insertAllObservation(currentWeather: WeatherCurrent)
 }

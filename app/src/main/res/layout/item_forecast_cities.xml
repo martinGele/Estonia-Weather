@@ -18,50 +18,57 @@
         android:padding="16dp">
 
         <ImageView
-            android:imageUrl="@{weather.phenomenon}"
-
             android:id="@+id/list_item_icon"
+
             android:layout_width="40dp"
-            android:layout_height="40dp"/>
+            android:layout_height="40dp"
+            android:imageUrl="@{weather.phenomenon}" />
 
         <LinearLayout
-            android:layout_height="wrap_content"
+
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:weightSum="1"
-            android:paddingLeft="16dp">
-
+            android:paddingLeft="16dp"
+            android:weightSum="1">
 
 
             <TextView
                 style="@style/Text"
-                android:text="@{weather.phenomenon}"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="@{weather.name}" />
+
+            <TextView
+                style="@style/Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{weather.phenomenon}" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
-                android:showWord="@{weather.tempmax}"
                 android:id="@+id/list_item_high_textview"
-                android:layout_width="match_parent"
-                android:gravity="right"
                 style="@style/Text"
-                android:layout_height="wrap_content"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:showWord="@{weather.tempmax}" />
 
             <TextView
-                android:showWord="@{weather.tempmin}"
                 android:id="@+id/list_item_low_textview"
-                android:layout_width="match_parent"
-                android:gravity="right"
                 style="@style/Text"
-                android:layout_height="wrap_content"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:showWord="@{weather.tempmin}" />
         </LinearLayout>
     </LinearLayout>
 

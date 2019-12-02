@@ -1,9 +1,15 @@
 package com.martin.weatherestonia.model
 
+import android.annotation.SuppressLint
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+
+
+@SuppressLint("ParcelCreator")
 data class Observation(
     @SerializedName("name")
     val name: String? = "",

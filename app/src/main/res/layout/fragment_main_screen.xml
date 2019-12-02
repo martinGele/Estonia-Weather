@@ -6,54 +6,61 @@
     android:layout_height="match_parent"
     tools:context=".view.MainActivity">
 
-
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:scrollbars="none">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/weatherForecastCurrent"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/weatherForecastCurrent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/weatherForecastRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+
+            </LinearLayout>
+
+
+            <ProgressBar
+                android:id="@+id/loadingView"
+                style="?android:attr/progressBarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.5" />
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:visibility="gone" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/weatherForecastRecycler"
+            <TextView
+                android:id="@+id/listError"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/slackey"
+                android:gravity="center"
+                android:text="@string/an_error_occurred"
+                android:textSize="20sp"
+                android:visibility="gone" />
+        </RelativeLayout>
 
 
-        </LinearLayout>
-
-
-        <ProgressBar
-            android:id="@+id/loadingView"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/listError"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:fontFamily="@font/slackey"
-            android:gravity="center"
-            android:text="@string/an_error_occurred"
-            android:textSize="20sp"
-            android:visibility="gone" />
-    </RelativeLayout>
-
+    </ScrollView>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

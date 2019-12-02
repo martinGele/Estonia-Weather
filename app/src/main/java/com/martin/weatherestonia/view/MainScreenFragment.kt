@@ -2,6 +2,7 @@ package com.martin.weatherestonia.view
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +14,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.martin.weatherestonia.R
 import com.martin.weatherestonia.adapter.CurrentDayWeatherAdapter
 import com.martin.weatherestonia.adapter.FourDaysFourcastAdapter
+import com.martin.weatherestonia.database.AppDatabase
 import com.martin.weatherestonia.model.Forecast
 import com.martin.weatherestonia.model.WeatherCurrent
 import com.martin.weatherestonia.model.WeatherFourDays
 import com.martin.weatherestonia.viewmodel.MainScreenViewModel
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_main_screen.*
 
 /**
@@ -33,6 +38,8 @@ class MainScreenFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+
         return inflater.inflate(R.layout.fragment_main_screen, container, false)
 
 
@@ -40,6 +47,9 @@ class MainScreenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val data = context?.let { AppDatabase.getInstance(it) }
+
 
         viewModel = ViewModelProviders.of(this).get(MainScreenViewModel::class.java)
 
@@ -52,13 +62,32 @@ class MainScreenFragment : Fragment() {
 
 
 
+        Observable.fromCallable {
+
+            data?.userDao()?.getCurrentObservation()
+        }.doOnNext { list ->
+
+            list?.map {
+
+                Log.d("GetWeather", it.observations.toString())
+            }
+
+
+        }.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
+
+
+
+
+
         weatherForecastCurrent.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = listAdapterCurrentWeather
 
         }
         weatherForecastRecycler.apply {
-            addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = listAdapterFOurDaysForecast
         }

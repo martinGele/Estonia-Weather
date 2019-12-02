@@ -6,7 +6,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.martin.weatherestonia.R
 import com.martin.weatherestonia.databinding.ItemForecastCitiesBinding
-import com.martin.weatherestonia.model.Forecast
 import com.martin.weatherestonia.model.Places
 
 class CitiesAdapter(private val forecastList: ArrayList<Places?>) :

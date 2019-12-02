@@ -5,15 +5,23 @@ import android.os.Parcel
 import com.google.gson.annotations.SerializedName
 import android.os.Parcelable
 import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.martin.weatherestonia.database.Convert
+import com.martin.weatherestonia.database.ConvertObservation
 
-@Entity(tableName = "current")
+@Entity(tableName = "currentWeather")
+@TypeConverters(ConvertObservation::class)
 data class WeatherCurrent(
+    @PrimaryKey
+    val key:Int?=1,
     @SerializedName("timestamp")
     val timestamp: String = "",
     @SerializedName("observations")
     val observations: List<Observation> = listOf()
 ):Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString()!!,
         parcel.createTypedArrayList(Observation)!!
     ) {

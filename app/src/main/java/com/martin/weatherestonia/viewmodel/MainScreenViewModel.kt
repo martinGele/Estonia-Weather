@@ -1,13 +1,16 @@
 package com.martin.weatherestonia.viewmodel
 
+import android.annotation.SuppressLint
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.martin.weatherestonia.database.AppDatabase
 import com.martin.weatherestonia.di.AppModule
 import com.martin.weatherestonia.di.DaggerViewModelComponent
 import com.martin.weatherestonia.model.WeatherCurrent
 import com.martin.weatherestonia.model.WeatherFourDays
 import com.martin.weatherestonia.network.WeatherApiService
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
@@ -22,6 +25,9 @@ class MainScreenViewModel(application: Application) : AndroidViewModel(applicati
     val currentWeather by lazy { MutableLiveData<WeatherCurrent>() }
     val loadError by lazy { MutableLiveData<Boolean>() }
     val loading by lazy { MutableLiveData<Boolean>() }
+
+
+    val date = AppDatabase.getInstance(application)
 
 
     private val disposable = CompositeDisposable()
@@ -47,9 +53,6 @@ class MainScreenViewModel(application: Application) : AndroidViewModel(applicati
     }
 
 
-
-
-
     fun showFourDaysWeather() {
 
         inject()
@@ -60,7 +63,7 @@ class MainScreenViewModel(application: Application) : AndroidViewModel(applicati
 
     }
 
-    fun showCurrentWeather(){
+    fun showCurrentWeather() {
 
         inject()
         loading.value = true
@@ -76,9 +79,22 @@ class MainScreenViewModel(application: Application) : AndroidViewModel(applicati
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<WeatherFourDays>() {
                     override fun onSuccess(list: WeatherFourDays) {
+
+
+                        Observable.fromCallable {
+                            date?.userDao()?.insertAllCurrent(list)
+
+
+                        }.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe()
+
+
+
                         loadError.value = false
                         weather.value = list
                         loading.value = false
+
                     }
 
                     override fun onError(e: Throwable) {
@@ -101,6 +117,17 @@ class MainScreenViewModel(application: Application) : AndroidViewModel(applicati
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<WeatherCurrent>() {
                     override fun onSuccess(current: WeatherCurrent) {
+
+                        Observable.fromCallable {
+                            with(date){
+                                this?.userDao()?.insertAllObservation(current)
+
+                            }
+
+                        }.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe()
+
 
 
                         loadError.value = false
