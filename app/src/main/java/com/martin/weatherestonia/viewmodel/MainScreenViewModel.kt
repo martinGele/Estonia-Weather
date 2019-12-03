@@ -1,10 +1,12 @@
 package com.martin.weatherestonia.viewmodel
 
-import android.annotation.SuppressLint
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.martin.weatherestonia.database.AppDatabase
+import com.martin.weatherestonia.database.WeatherDatabaseRepository
 import com.martin.weatherestonia.di.AppModule
 import com.martin.weatherestonia.di.DaggerViewModelComponent
 import com.martin.weatherestonia.model.WeatherCurrent
@@ -15,6 +17,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -27,7 +30,22 @@ class MainScreenViewModel(application: Application) : AndroidViewModel(applicati
     val loading by lazy { MutableLiveData<Boolean>() }
 
 
-    val date = AppDatabase.getInstance(application)
+    val weatherDB: LiveData<WeatherFourDays>
+    val currentWeatherDB: LiveData<WeatherCurrent>
+
+
+    private val repositoryDatabase: WeatherDatabaseRepository
+
+
+    init {
+
+        val dataBase = AppDatabase.getInstance(application)!!.weatherDao()
+        repositoryDatabase = WeatherDatabaseRepository(dataBase)
+
+        weatherDB = repositoryDatabase.getCurrentWeather
+        currentWeatherDB = repositoryDatabase.getForecastWeather
+
+    }
 
 
     private val disposable = CompositeDisposable()
@@ -72,22 +90,20 @@ class MainScreenViewModel(application: Application) : AndroidViewModel(applicati
     }
 
 
+
+
     private fun getWeather() {
         disposable.add(
             apiService.getWeather()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<WeatherFourDays>() {
-                    override fun onSuccess(list: WeatherFourDays) {
+                    override fun onSuccess(weatherFourDays: WeatherFourDays) {
 
-                        Observable.fromCallable {
-                            date?.userDao()?.insertAllCurrent(list)
-                        }.subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe()
+                        insertFourDaysDB(weatherFourDays)
 
                         loadError.value = false
-                        weather.value = list
+                        weather.value = weatherFourDays
                         loading.value = false
 
                     }
@@ -112,14 +128,11 @@ class MainScreenViewModel(application: Application) : AndroidViewModel(applicati
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<WeatherCurrent>() {
                     override fun onSuccess(current: WeatherCurrent) {
-                        Observable.fromCallable {
-                            with(date){
-                                this?.userDao()?.insertAllObservation(current)
 
-                            }
-                        }.subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe()
+
+
+                        insertCurrentDB(current)
+
                         loadError.value = false
                         currentWeather.value = current
                         loading.value = false
@@ -141,5 +154,16 @@ class MainScreenViewModel(application: Application) : AndroidViewModel(applicati
         super.onCleared()
         disposable.clear()
     }
+
+    fun insertFourDaysDB(weather: WeatherFourDays) = viewModelScope.launch {
+        repositoryDatabase.insertCurrent(weather)
+    }
+
+
+    fun insertCurrentDB(weather: WeatherCurrent)= viewModelScope.launch {
+        repositoryDatabase.insertForecast(weather)
+    }
+
+
 
 }
